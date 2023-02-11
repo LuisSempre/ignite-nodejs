@@ -1,27 +1,31 @@
-import http from 'node:http'
+import http from "node:http";
+import { json } from "./middleware/json.js";
 
-const users = []
+const users = [];
 
-const server = http.createServer((req, res) => {
-  const { method, url } = req
+const server = http.createServer(async (req, res) => {
+  const { method, url } = req;
 
-  if( method === 'GET' && url === '/users') {
+  await json(req, res);
+
+  if (method === "GET" && url === "/users") {
     return res
-    .setHeader('Content-type', 'application/json')
-    .end(JSON.stringify(users))
+      .setHeader("Content-type", "application/json")
+      .end(JSON.stringify(users));
   }
 
-  if (method === 'POST' && url === '/users') {
+  if (method === "POST" && url === "/users") {
+    const { name, email } = req.body;
+
     users.push({
       id: 1,
-      name: 'Saitama',
-      email: 'saitama@punch.com'
-
-    })
-    return res.writeHead(201).end()
+      name,
+      email,
+    });
+    return res.writeHead(201).end();
   }
 
-  return res.writeHead(404).end()
-})
+  return res.writeHead(404).end();
+});
 
-server.listen(4000)
+server.listen(4000);

@@ -17,6 +17,14 @@ class One extends Readable {
   }
 }
 
+class Inverse extends Transform {
+  _transform(chunk, encoding, callback) {
+    const transformed = Number(chunk.toString()) * -1
+
+    callback(null, Buffer.from(String(transformed)))
+  }
+}
+
 class Multiply extends Writable{
   _write(chunk, encoding, callback) {
     console.log(Number(chunk.toString()) * 10)
@@ -25,4 +33,6 @@ class Multiply extends Writable{
 }
 
 
-new One().pipe( new Multiply());
+new One()
+.pipe(new Inverse())
+.pipe( new Multiply());
