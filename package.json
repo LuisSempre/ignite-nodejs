@@ -5,7 +5,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev": "node --watch src/server.js"
+    "dev": "node --watch --trace-warnings src/server.js"
   },
   "keywords": [],
   "author": "",
