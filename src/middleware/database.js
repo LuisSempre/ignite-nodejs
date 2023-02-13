@@ -1,6 +1,10 @@
+import fs from 'node:fs/promises'
+
 export class Database {
-  database = {
-  
+  #database = {}
+
+  #persist() {
+    fs.writeFile('db.json', JSON.stringify(this.#database))
   }
 
   select(table) {
@@ -10,11 +14,13 @@ export class Database {
   }
 
   insert(table, data) {
-    if ( Array.isArray(this.database[table])) {
+    if ( Array.isArray(this.#database[table])) {
 
     }else{
       this.database[table] = [data]
     }
+
+    this.#persist();
 
     return data;
   }
