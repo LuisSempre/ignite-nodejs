@@ -1,3 +1,3 @@
 # ignite-nodejs
 
-- Trilha 2021 antiga.
+- Trilha 2021.
